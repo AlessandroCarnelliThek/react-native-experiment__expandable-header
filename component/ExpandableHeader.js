@@ -1,3 +1,37 @@
+/*NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN#
+mMMMMMMMMMMMMMMMMMmhysoooossydNMMMMMMMMMMMMMMMMMMm
+mMMMMMMMMMMMMNy+-   `.----.`   `:ohMMMMMMMMMMMMMMm
+mMMMMMMMMMNs-  .+ydNMMMMMMMMMmhs/` `:yMMMMMMMMMMMm
+mMMMMMMMm/  -smNMMMMMMMMMMMMMMMMMmdo. `oNMMMMMMMMm
+mMMMMMN+  /dd+``hMMMMMMMMMMMMMMM+ .sNy- `sMMMMMMMm
+mMMMMd. -dm:     sMMMMMMMMMMMMN:    `oNy` :NMMMMMm
+mMMMh  /Ms        +MMMMMMMMMMN-       .dm. .mMMMMm
+mMMd  +M+          :NMMMMMMMm.          yN. .NMMMm
+mMM. -Ms            -NMMMMMh`            dm  +MMMm
+mMy  hN`            /mmyyhNh-            :M/ `NMMm
+mM+  My            sN:     oM:            Nh  hMMm
+mM: .MdooooooooooooMy       NmooooooooooooNd  yMMm
+mM+  MMMMMMMMMMMMMMMN:     oMMMMMMMMMMMMMMMh  hMMm
+mMh  hMMMMMMMMMMMMMMMNmyyhmMMMMMMMMMMMMMMMM/ `NMMm
+mMM. -MMMMMMMMMMMMMMd` ..` -NMMMMMMMMMMMMMm  +MMMm
+mMMd  +MMMMMMMMMMMMy        .mMMMMMMMMMMMN. .NMMMm
+mMMMh  /MMMMMMMMMMs          `dMMMMMMMMMm. .mMMMMm
+mMMMMd. -dMMMMMMM+            `hMMMMMMMy` :NMMMMMm
+mMMMMMN+  /dMMMN:               sMMMMy- `sMMMMMMMm
+mMMMMMMMm/  -sNmo:`           ./sMdo. `oNMMMMMMMMm
+mMMMMMMMMMNs-  .+ydmdhyysyyhmmhs/` `:yMMMMMMMMMMMm
+mMMMMMMMMMMMMNy+-`  `.----.`   `:ohMMMMMMMMMMMMMMm
+#MMMMMMMMMMMMMMMMMmdysoooossydNMMMMMMMMMMMMMMMMMM#  
+
+                                                                                
+      .oyyyo .oyyyo` +yo  +yo :yyyy+  +yyys- .yy: /y` yyyyy :yy. os yyyyyy.     
+     `Nm.  -`Nm` .Nm sMms+mMh +M/`hM-yM:  yM:-MdMooM.`Mm++/ oMhN:hN   mM        
+     `Nm.  -`Nm` .Nm sM-dd.Mh +Mhso- yM:  yM:-M+-mMM.`Md--. oM-/NNN   mM        
+      .oyyyo .oyyyo` /y`  `yo :y-     +yyys- .y: `sy` yyyyy :y. -ys   sy        
+                                                                                
+________________________________________________________________________________*/
+
+
 import React, { useEffect, useState, useRef } from 'react';
 import {
     StyleSheet,
@@ -24,18 +58,18 @@ export default function ExpandableHeader({ children, title }) {
     const header_sheet_translation = useRef(new Animated.Value(0)).current
     const filter_opacity = useRef(new Animated.Value(0)).current
 
-    const animatedSyle = {
+    const animatedStyle = {
 
         contentOpacity: {
             opacity: header_content_opacity
+        },
+        filterOpacity: {
+            opacity: filter_opacity
         },
         translation: {
             transform: [{
                 translateY: header_sheet_translation
             }],
-        },
-        filterOpacity: {
-            opacity: filter_opacity
         },
     }
     const headerSheetFADE_IN = () => {
@@ -105,29 +139,33 @@ export default function ExpandableHeader({ children, title }) {
 
     return (
         <>
-            <Animated.View style={[styles.filter, animatedSyle.filterOpacity]} pointerEvents={isSheetOpen ? 'auto' : 'none'} />
+            <Animated.View style={[styles.filter, animatedStyle.filterOpacity]} pointerEvents={isSheetOpen ? 'auto' : 'none'} />
 
             <View style={styles.header}>
 
-                <Animated.View style={[styles.header__sheet, animatedSyle.translation]} onLayout={(e) => onLayoutGetContentHeight(e)}>
-                    <Animated.View style={[styles.content__container, animatedSyle.contentOpacity]} >
-                        {/* :::::::HEADER_CONTENT - START -----------------------*/}
+                <Animated.View style={[styles.header__sheet, animatedStyle.translation]} onLayout={(e) => onLayoutGetContentHeight(e)}>
+                    <Animated.View style={[styles.content__container, animatedStyle.contentOpacity]} >
+                        {/* :::::::HEADER_CONTENT_AREA - START -----------------------*/}
 
                         {children}
 
-                        {/* :::::::HEADER_CONTENT - END -------------------------*/}
+                        {/* :::::::HEADER_CONTENT_AREA - END -------------------------*/}
                     </Animated.View>
                 </Animated.View>
 
                 <Text style={styles.title}>{title}</Text>
 
             </View>
+
+            {/* :::::::HEADER_BTN ------------------------------*/}
             <AnimatedPressable
                 onPress={() => setIsSheetOpen((prev) => !prev)}
-                style={[styles.btn, animatedSyle.translation]} >
+                style={[styles.btn, animatedStyle.translation]} >
                 <View style={styles.btn_mask} />
                 <View style={[styles.btn_point, { backgroundColor: isSheetOpen ? COLOR_ITEM : COLOR_BG, }]} />
             </AnimatedPressable>
+            {/*--------------------------------------------------*/}
+
         </>
     )
 }
