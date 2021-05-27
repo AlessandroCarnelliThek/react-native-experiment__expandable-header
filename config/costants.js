@@ -1,0 +1,12 @@
+export default {
+
+    COLOR_HEADER: '#F9F9F9',
+    COLOR_FILTER: '#333333',
+    COLOR_ITEM: '#FFC300',
+    COLOR_BG: '#154360',
+
+    HEADER_VERTICAL_SPACER: 40,
+
+    SHEET_HORIZONTAL_SPACER: 30,
+
+}
