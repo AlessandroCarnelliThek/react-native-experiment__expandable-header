@@ -104,7 +104,6 @@ export default function ExpandableHeader({ children, title }) {
     }, [isSheetOpen])
 
     return (
-
         <>
             <Animated.View style={[styles.filter, animatedSyle.filterOpacity]} pointerEvents={isSheetOpen ? 'auto' : 'none'} />
 
