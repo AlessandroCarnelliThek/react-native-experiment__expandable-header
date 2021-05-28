@@ -1,35 +1,36 @@
-/*NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN#
-mMMMMMMMMMMMMMMMMMmhysoooossydNMMMMMMMMMMMMMMMMMMm
-mMMMMMMMMMMMMNy+-   `.----.`   `:ohMMMMMMMMMMMMMMm
-mMMMMMMMMMNs-  .+ydNMMMMMMMMMmhs/` `:yMMMMMMMMMMMm
-mMMMMMMMm/  -smNMMMMMMMMMMMMMMMMMmdo. `oNMMMMMMMMm
-mMMMMMN+  /dd+``hMMMMMMMMMMMMMMM+ .sNy- `sMMMMMMMm
-mMMMMd. -dm:     sMMMMMMMMMMMMN:    `oNy` :NMMMMMm
-mMMMh  /Ms        +MMMMMMMMMMN-       .dm. .mMMMMm
-mMMd  +M+          :NMMMMMMMm.          yN. .NMMMm
-mMM. -Ms            -NMMMMMh`            dm  +MMMm
-mMy  hN`            /mmyyhNh-            :M/ `NMMm
-mM+  My            sN:     oM:            Nh  hMMm
-mM: .MdooooooooooooMy       NmooooooooooooNd  yMMm
-mM+  MMMMMMMMMMMMMMMN:     oMMMMMMMMMMMMMMMh  hMMm
-mMh  hMMMMMMMMMMMMMMMNmyyhmMMMMMMMMMMMMMMMM/ `NMMm
-mMM. -MMMMMMMMMMMMMMd` ..` -NMMMMMMMMMMMMMm  +MMMm
-mMMd  +MMMMMMMMMMMMy        .mMMMMMMMMMMMN. .NMMMm
-mMMMh  /MMMMMMMMMMs          `dMMMMMMMMMm. .mMMMMm
-mMMMMd. -dMMMMMMM+            `hMMMMMMMy` :NMMMMMm
-mMMMMMN+  /dMMMN:               sMMMMy- `sMMMMMMMm
-mMMMMMMMm/  -sNmo:`           ./sMdo. `oNMMMMMMMMm
-mMMMMMMMMMNs-  .+ydmdhyysyyhmmhs/` `:yMMMMMMMMMMMm
-mMMMMMMMMMMMMNy+-`  `.----.`   `:ohMMMMMMMMMMMMMMm
-#MMMMMMMMMMMMMMMMMmdysoooossydNMMMMMMMMMMMMMMMMMM#  
+/*MMmysssshNMMMN
+NMy+:dMMMMo/omMN
+N++. .dMMo  //dN     .oyyyo .oyyyo` +yo  +yo :yyyy+  +yyys- .yy: /y` yyyyy :yy. os yyyyyy.
+d/-   ++o-   o:N    `Nm.  -`Nm` .Nm sMms+mMh +M/`hM-yM:  yM:-MdMooM.`Mm++/ oMhN:hN   mM    
+d/MMMMd:/MMMMN:N    `Nm.  -`Nm` .Nm sM-dd.Mh +Mhso- yM:  yM:-M+-mMM.`Md--. oM-/NNN   mM    
+N+yMMm.  oMMN/dN     .oyyyo .oyyyo` /y`  `yo :y-     +yyys- .y: `sy` yyyyy :y. -ys   sy
+NMh+y/-..:ssomMN
+NMMMmysssshNMMMN
 
-                                                                                
-      .oyyyo .oyyyo` +yo  +yo :yyyy+  +yyys- .yy: /y` yyyyy :yy. os yyyyyy.     
-     `Nm.  -`Nm` .Nm sMms+mMh +M/`hM-yM:  yM:-MdMooM.`Mm++/ oMhN:hN   mM        
-     `Nm.  -`Nm` .Nm sM-dd.Mh +Mhso- yM:  yM:-M+-mMM.`Md--. oM-/NNN   mM        
-      .oyyyo .oyyyo` /y`  `yo :y-     +yyys- .y: `sy` yyyyy :y. -ys   sy        
-                                                                                
-________________________________________________________________________________*/
+__________________________________________________________________________________________
+
+    EXPANDABLE HEADER COMPONENT
+
+
+    #_FILTER: when it is active it stands between the application and the header and 
+              blocks the interactions with the page below.
+    #_HEADER: is the fixed part of the header where the  ' TITLE ' is shown.
+    #_HEADER_SHEET: is the moving part of the header where the ' CONTENT ' is shown.
+    #_HEADER_BTN: it is used to toggle the state of 'isSheetOpen'.
+    
+
+    each time header_btn is pressed toggle the status of isSheetOpen
+        if isSheetOpen is true the headerSheetOPEN animation will be loaded: 
+            -there will be a transition of HEADER_SHEET and HEADER_BTN down 
+             equal to header_content_height and the FILTER is activated,
+            -then the content will be made visible.
+        else if it is false the headerSheetCLOSE animation will be loaded:
+            -the content will be made invisible,
+            -then there will be a transition of HEADER_SHEET and HEADER_BTN upwards
+             to their respective origins and the filter is deactivated.
+
+
+________________________________________________________________________________________*/
 
 
 import React, { useEffect, useState, useRef } from 'react';
@@ -59,7 +60,6 @@ export default function ExpandableHeader({ children, title }) {
     const filter_opacity = useRef(new Animated.Value(0)).current
 
     const animatedStyle = {
-
         contentOpacity: {
             opacity: header_content_opacity
         },
@@ -72,8 +72,7 @@ export default function ExpandableHeader({ children, title }) {
             }],
         },
     }
-    const headerSheetFADE_IN = () => {
-
+    const headerSheetOPEN = () => {
         Animated.sequence([
             Animated.parallel([
                 Animated.timing(header_sheet_translation, {
@@ -99,8 +98,8 @@ export default function ExpandableHeader({ children, title }) {
             }),
         ]).start()
     }
-    const headerSheetFADE_OUT = () => {
 
+    const headerSheetCLOSE = () => {
         Animated.sequence([
             Animated.timing(header_content_opacity, {
                 toValue: isSheetOpen ? .7 : 0,
@@ -124,38 +123,44 @@ export default function ExpandableHeader({ children, title }) {
                     useNativeDriver: true,
                 })
             ]),
-
         ]).start()
     }
+
     const onLayoutGetContentHeight = (event) => {
         setHeader_content_height(event.nativeEvent.layout.height)
     }
+
     useEffect(() => {
         if (isSheetOpen)
-            headerSheetFADE_IN()
+            headerSheetOPEN()
         else
-            headerSheetFADE_OUT()
+            headerSheetCLOSE()
     }, [isSheetOpen])
 
     return (
         <>
+            {/* :::::::FILTER ------------------------------------------*/}
             <Animated.View style={[styles.filter, animatedStyle.filterOpacity]} pointerEvents={isSheetOpen ? 'auto' : 'none'} />
+            {/*---------------------------------------------------------*/}
 
+            {/* :::::::HEADER - START ----------------------------------*/}
             <View style={styles.header}>
 
+                {/* :::::::HEADER_SHEET - START ----------------------------*/}
                 <Animated.View style={[styles.header__sheet, animatedStyle.translation]} onLayout={(e) => onLayoutGetContentHeight(e)}>
                     <Animated.View style={[styles.content__container, animatedStyle.contentOpacity]} >
-                        {/* :::::::HEADER_CONTENT_AREA - START -----------------------*/}
 
                         {children}
 
-                        {/* :::::::HEADER_CONTENT_AREA - END -------------------------*/}
                     </Animated.View>
                 </Animated.View>
+                {/* :::::::HEADER_SHEET - END ------------------------------*/}
 
                 <Text style={styles.title}>{title}</Text>
 
             </View>
+            {/* :::::::HEADER - END ------------------------------------*/}
+
 
             {/* :::::::HEADER_BTN ------------------------------*/}
             <AnimatedPressable
@@ -165,7 +170,6 @@ export default function ExpandableHeader({ children, title }) {
                 <View style={[styles.btn_point, { backgroundColor: isSheetOpen ? COLOR_ITEM : COLOR_BG, }]} />
             </AnimatedPressable>
             {/*--------------------------------------------------*/}
-
         </>
     )
 }
@@ -177,63 +181,67 @@ const styles = StyleSheet.create({
         height: '100%',
         opacity: .8,
         position: 'absolute',
+
     },
     header: {
         backgroundColor: COLOR_HEADER,
         width: width,
         paddingVertical: HEADER_VERTICAL_SPACER,
-
         position: 'absolute',
         top: 0,
-
         justifyContent: 'center',
         alignItems: 'center',
+
     },
     header__sheet: {
         backgroundColor: COLOR_HEADER,
         width: width,
         paddingHorizontal: SHEET_HORIZONTAL_SPACER,
         paddingBottom: HEADER_VERTICAL_SPACER * 1.5,
-
         position: 'absolute',
         bottom: 0,
-
-        // borderTopColor: '#ccc',
-        // borderTopWidth: 4,
-
         borderBottomColor: COLOR_BG,
         borderBottomWidth: 4,
-
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+
     },
     content__container: {
-        // backgroundColor: '#f00'
+        // backgroundColor: '#f00',
+
     },
     title: {
         color: COLOR_BG,
         fontSize: 40,
-        fontWeight: '100'
+        fontWeight: '100',
+
     },
     btn: {
+        backgroundColor: COLOR_HEADER,
         width: 50,
         height: 50,
         borderRadius: 50,
         position: 'absolute',
         top: 100,
-        backgroundColor: COLOR_HEADER,
-
         borderWidth: 4,
         borderColor: COLOR_BG,
-
         justifyContent: 'center',
         alignItems: 'center',
-        // overflow: 'hidden',
+
     },
     btn_mask: {
-        width: 100, height: 30.4, position: 'absolute', top: -5, backgroundColor: COLOR_HEADER
+        backgroundColor: COLOR_HEADER,
+        width: 100,
+        height: 30.4,
+        position: 'absolute',
+        top: -5,
+
     },
     btn_point: {
-        width: 20, height: 20, position: 'absolute', borderRadius: 50
+        width: 20,
+        height: 20,
+        position: 'absolute',
+        borderRadius: 50
+
     }
 })

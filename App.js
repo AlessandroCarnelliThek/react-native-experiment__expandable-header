@@ -40,13 +40,14 @@ _________________________________________________________
   #_Put the content you want in the EXAMPLE HEADER CONTENT AREA.
   
   #_By clicking the switch under the header title, the SHEET 
-   will scroll from top to bottom by the height of the content
-   and the CONTENT fade-in on the SHEET.
+  will scroll from top to bottom by the height of the content
+  and the CONTENT fade-in on the SHEET.
 
   #_Designed for small contents, not tested with ScrollView and FlatList. 
   
-  #_The content in this example are the incipit of a story by H.P. Lovecraft
-_________________________________________________________
+  #_The content in this example are the incipit of:
+   ' The Call of Cthulhu ' By H. P. Lovecraft
+  _________________________________________________________
  
   look at my works and follow me: 
     https://github.com/AlessandroCarnelliThek
