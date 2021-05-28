@@ -139,14 +139,15 @@ export default function ExpandableHeader({ children, title }) {
 
     return (
         <>
-            {/* :::::::FILTER ------------------------------------------*/}
+            {/* :::::::FILTER */}
             <Animated.View style={[styles.filter, animatedStyle.filterOpacity]} pointerEvents={isSheetOpen ? 'auto' : 'none'} />
-            {/*---------------------------------------------------------*/}
+            {/*--------------------------------------------------------------------------------------------------------------*/}
 
-            {/* :::::::HEADER - START ----------------------------------*/}
+
+            {/* :::::::HEADER - START */}
             <View style={styles.header}>
 
-                {/* :::::::HEADER_SHEET - START ----------------------------*/}
+                {/* :::::::HEADER_SHEET - START ------------------------------------------------------------------------------------*/}
                 <Animated.View style={[styles.header__sheet, animatedStyle.translation]} onLayout={(e) => onLayoutGetContentHeight(e)}>
                     <Animated.View style={[styles.content__container, animatedStyle.contentOpacity]} >
 
@@ -154,22 +155,21 @@ export default function ExpandableHeader({ children, title }) {
 
                     </Animated.View>
                 </Animated.View>
-                {/* :::::::HEADER_SHEET - END ------------------------------*/}
+                {/* :::::::HEADER_SHEET - END --------------------------------------------------------------------------------------*/}
 
                 <Text style={styles.title}>{title}</Text>
-
             </View>
-            {/* :::::::HEADER - END ------------------------------------*/}
+            {/* :::::::HEADER - END */}
 
 
-            {/* :::::::HEADER_BTN ------------------------------*/}
+            {/* :::::::HEADER_BTN */}
             <AnimatedPressable
                 onPress={() => setIsSheetOpen((prev) => !prev)}
                 style={[styles.btn, animatedStyle.translation]} >
                 <View style={styles.btn_mask} />
                 <View style={[styles.btn_point, { backgroundColor: isSheetOpen ? COLOR_ITEM : COLOR_BG, }]} />
             </AnimatedPressable>
-            {/*--------------------------------------------------*/}
+            {/*--------------------------------------------------------------------------------------------*/}
         </>
     )
 }
