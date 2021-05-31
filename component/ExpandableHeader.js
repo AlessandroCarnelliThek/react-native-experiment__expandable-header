@@ -22,7 +22,7 @@ ________________________________________________________________________________
     each time header_btn is pressed toggle the status of isSheetOpen
         if isSheetOpen is true the headerSheetOPEN animation will be loaded: 
             -there will be a transition of HEADER_SHEET and HEADER_BTN down 
-             equal to header_content_height and the FILTER is activated,
+             equal to headerContentHeight and the FILTER is activated,
             -then the content will be made visible.
         else if it is false the headerSheetCLOSE animation will be loaded:
             -the content will be made invisible,
@@ -52,7 +52,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function ExpandableHeader({ children, title }) {
 
-    const [header_content_height, setHeader_content_height] = useState(0)
+    const [headerContentHeight, setHeader_content_height] = useState(0)
     const [isSheetOpen, setIsSheetOpen] = useState(false)
 
     const header_content_opacity = useRef(new Animated.Value(0)).current
@@ -76,12 +76,12 @@ export default function ExpandableHeader({ children, title }) {
         Animated.sequence([
             Animated.parallel([
                 Animated.timing(header_sheet_translation, {
-                    toValue: header_content_height,
+                    toValue: headerContentHeight,
                     timing: 1000,
                     useNativeDriver: true,
                 }),
                 Animated.timing(header_sheet_translation, {
-                    toValue: header_content_height,
+                    toValue: headerContentHeight,
                     timing: 1000,
                     useNativeDriver: true,
                 }),
